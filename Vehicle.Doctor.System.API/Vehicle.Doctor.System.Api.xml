@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Vehicle.Doctor.System.API</name>
+    </assembly>
+    <members>
+        <member name="M:Vehicle.Doctor.System.API.Controllers.V1.UserController.Get(Vehicle.Doctor.System.Common.Pagination.PagedQuery)">
+            <summary>
+            Get all users
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Vehicle.Doctor.System.API.Infrastructure.ExtensionCollectionServices.ApplyGlobalFilters``1(Microsoft.EntityFrameworkCore.ModelBuilder,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            https://stackoverflow.com/questions/29261734/add-filter-to-all-query-entity-framework
+            </summary>
+            <param name="modelBuilder"></param>
+            <param name="expression"></param>
+            <typeparam name="TInterface"></typeparam>
+        </member>
+    </members>
+</doc>

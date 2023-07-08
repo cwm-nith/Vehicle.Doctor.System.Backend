@@ -6,6 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>23b114e5-424f-4ee9-8ebe-b07284c21c30</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>D:\Projects\Vehicle.Doctor.System\Vehicle.Doctor.System.Backend\Vehicle.Doctor.System.API\Vehicle.Doctor.System.Api.xml</DocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +31,23 @@
 
   <ItemGroup>
     <Folder Include="Applications\Configurations\" />
+    <Folder Include="Applications\Entities\Users\" />
+    <Folder Include="Applications\Exceptions\Middleware\" />
+    <Folder Include="Applications\Features\Authentications\Commands\CommandHandlers\" />
+    <Folder Include="Applications\Features\Authentications\Queries\" />
+    <Folder Include="Applications\Features\Users\Commands\CommandHandlers\" />
+    <Folder Include="Applications\Constants\" />
+    <Folder Include="Applications\Middleware\Logging\" />
+    <Folder Include="Applications\Utils\" />
+    <Folder Include="Applications\Repositories\" />
+    <Folder Include="Infrastructure\Options\" />
+    <Folder Include="Infrastructure\Swagger\CustomizeHeader\" />
+    <Folder Include="Infrastructure\Tables\Users\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vehicle.Doctor.System.Common\Vehicle.Doctor.System.Common.csproj" />
+    <ProjectReference Include="..\Vehicle.Doctor.System.Shared\Vehicle.Doctor.System.Shared.csproj" />
   </ItemGroup>
 
 </Project>

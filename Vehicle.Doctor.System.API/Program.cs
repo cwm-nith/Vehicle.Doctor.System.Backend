@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Configuration;
+using Vehicle.Doctor.System.API.Applications;
 using Vehicle.Doctor.System.API.Applications.Configurations;
 using Vehicle.Doctor.System.API.Infrastructure;
 
@@ -15,20 +15,20 @@ var appSetting = new ApplicationSetting();
 builder.Configuration.GetSection("AppSetting").Bind(appSetting);
 builder.Services.AddSingleton(appSetting);
 
-builder.Services.AddInfrastructure();
+builder.Services
+    .AddApplicationService()
+    .AddInfrastructure(appSetting);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+var settings = app.Services.GetService<ApplicationSetting>();
+if (settings?.Swagger.IsEnable ?? false) app.UseCustomSwagger();
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseInfrastructure();
 
 app.MapControllers();
 
