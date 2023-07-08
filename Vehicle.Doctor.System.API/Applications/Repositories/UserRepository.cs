@@ -35,15 +35,9 @@ public class UserRepository : IUserRepository
 
     public async Task<UserEntity?> GetByPhoneNumberAsync(string phoneNumber, CancellationToken cancellation = default)
     {
-        if (string.IsNullOrEmpty(phoneNumber) || phoneNumber.Length < 8)
-        {
-            throw new InvalidPhoneNumberException(phoneNumber);
-        }
 
-        phoneNumber = phoneNumber.Trim().Replace("+", "").Replace(" ", "");
-
-        if (!phoneNumber.IsNumber()) throw new InvalidPhoneNumberException(phoneNumber);
-
+        phoneNumber = RegexExtension.ValidatePhoneNumber(phoneNumber);
+        
         var user = await _readDbRepository.FirstOrDefaultAsync(i => i.PhoneNumber == phoneNumber, cancellation);
         return user?.ToEntity();
     }

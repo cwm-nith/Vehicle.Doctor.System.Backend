@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Vehicle.Doctor.System.API.Applications.Entities.Users;
 using Vehicle.Doctor.System.API.Applications.Exceptions.Users;
@@ -27,15 +26,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserD
 
         if (r.Username.Contains(' ')) throw new InvalidUserNameException(r.Username);
 
-        //+85593 256 184
-        if (string.IsNullOrEmpty(r.PhoneNumber) || r.PhoneNumber.Length < 8)
-        {
-            throw new InvalidPhoneNumberException(r.PhoneNumber);
-        }
-
-        r.PhoneNumber = r.PhoneNumber.Trim().Replace("+", "").Replace(" ", "");
-
-        if (!r.PhoneNumber.IsNumber()) throw new InvalidPhoneNumberException(r.PhoneNumber);
+        r.PhoneNumber = RegexExtension.ValidatePhoneNumber(r.PhoneNumber);
 
         var entity = new UserEntity
         {
