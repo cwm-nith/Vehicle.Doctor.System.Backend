@@ -6,12 +6,49 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>23b114e5-424f-4ee9-8ebe-b07284c21c30</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>D:\Projects\Vehicle.Doctor.System\Vehicle.Doctor.System.Backend\Vehicle.Doctor.System.API\Vehicle.Doctor.System.Api.xml</DocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.7" />
+    <PackageReference Include="MediatR" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Applications\Configurations\" />
+    <Folder Include="Applications\Entities\Users\" />
+    <Folder Include="Applications\Exceptions\Middleware\" />
+    <Folder Include="Applications\Features\Authentications\Commands\CommandHandlers\" />
+    <Folder Include="Applications\Features\Authentications\Queries\" />
+    <Folder Include="Applications\Features\Users\Commands\CommandHandlers\" />
+    <Folder Include="Applications\Constants\" />
+    <Folder Include="Applications\Middleware\Logging\" />
+    <Folder Include="Applications\Helpers\" />
+    <Folder Include="Applications\Utils\" />
+    <Folder Include="Applications\Repositories\" />
+    <Folder Include="Infrastructure\Options\" />
+    <Folder Include="Infrastructure\Swagger\CustomizeHeader\" />
+    <Folder Include="Infrastructure\Tables\Users\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vehicle.Doctor.System.Common\Vehicle.Doctor.System.Common.csproj" />
+    <ProjectReference Include="..\Vehicle.Doctor.System.Shared\Vehicle.Doctor.System.Shared.csproj" />
   </ItemGroup>
 
 </Project>
