@@ -7,6 +7,7 @@ using Vehicle.Doctor.System.Shared.Dto.Users;
 
 namespace Vehicle.Doctor.System.API.Controllers.V1;
 
+[ApiVersion("1")]
 public class AuthController : BaseApiController
 {
     private readonly IMediator _mediator;
