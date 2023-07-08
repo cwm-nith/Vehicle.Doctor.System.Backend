@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.Extensions.Caching.Distributed;
 using Vehicle.Doctor.System.API.Applications.Entities.Users;
 using Vehicle.Doctor.System.API.Applications.Exceptions.Users;
+using Vehicle.Doctor.System.API.Applications.Helpers;
 using Vehicle.Doctor.System.API.Applications.IRepositories;
 using Vehicle.Doctor.System.API.Applications.Utils;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Users;
@@ -11,35 +13,53 @@ namespace Vehicle.Doctor.System.API.Applications.Repositories;
 
 public class UserRepository : IUserRepository
 {
+    public const string CacheKey = "VDS:USERS";
+
     private readonly IWriteDbRepository<UserTable> _writeDbRepository;
     private readonly IReadDbRepository<UserTable> _readDbRepository;
     private readonly ITokenRepository _tokenProvider;
+    private readonly IDistributedCache _distributedCache;
     public UserRepository(IWriteDbRepository<UserTable> writeDbRepository,
-        IReadDbRepository<UserTable> readDbRepository, ITokenRepository tokenProvider)
+        IReadDbRepository<UserTable> readDbRepository, ITokenRepository tokenProvider, IDistributedCache distributedCache)
     {
         _writeDbRepository = writeDbRepository;
         _readDbRepository = readDbRepository;
         _tokenProvider = tokenProvider;
+        _distributedCache = distributedCache;
     }
     public async Task<UserEntity?> GetByIdAsync(long id, CancellationToken cancellation = default)
     {
+        var key = GenKeyCache(id);
+        var userEntity = await _distributedCache.GetAsync<UserEntity>(key, cancellation);
+        if(userEntity is not null) return userEntity;
         var user = await _readDbRepository.FirstOrDefaultAsync(i => i.Id == id, cancellation);
-        return user?.ToEntity();
+        userEntity = user?.ToEntity();
+        await _distributedCache.SetAsync(key, userEntity, cancellationToken: cancellation);
+        return userEntity;
     }
 
     public async Task<UserEntity?> GetByUserNameAsync(string username, CancellationToken cancellation = default)
     {
+        var key = GenKeyCache(username);
+        var userEntity = await _distributedCache.GetAsync<UserEntity>(key, cancellation);
+        if (userEntity is not null) return userEntity;
         var user = await _readDbRepository.FirstOrDefaultAsync(i => i.UserName == username, cancellation);
-        return user?.ToEntity();
+        userEntity = user?.ToEntity();
+        await _distributedCache.SetAsync(key, userEntity, cancellationToken: cancellation);
+        return userEntity;
     }
 
     public async Task<UserEntity?> GetByPhoneNumberAsync(string phoneNumber, CancellationToken cancellation = default)
     {
 
         phoneNumber = RegexExtension.ValidatePhoneNumber(phoneNumber);
-        
+        var key = GenKeyCache(phoneNumber);
+        var userEntity = await _distributedCache.GetAsync<UserEntity>(key, cancellation);
+        if (userEntity is not null) return userEntity;
         var user = await _readDbRepository.FirstOrDefaultAsync(i => i.PhoneNumber == phoneNumber, cancellation);
-        return user?.ToEntity();
+        userEntity = user?.ToEntity();
+        await _distributedCache.SetAsync(key, userEntity, cancellationToken: cancellation);
+        return userEntity;
     }
 
 
@@ -72,13 +92,29 @@ public class UserRepository : IUserRepository
 
     public async Task<UserEntity> UpdateUserAsync(UserEntity user, CancellationToken cancellation = default)
     {
-        await _writeDbRepository.UpdateAsync(user.ToTable(), cancellation);
+
+        var tasks = new List<Task>
+        {
+            _distributedCache.Invalidate(GenKeyCache(user.PhoneNumber), cancellation),
+            _writeDbRepository.UpdateAsync(user.ToTable(), cancellation),
+            _distributedCache.Invalidate(GenKeyCache(user.Id), cancellation),
+            _distributedCache.Invalidate(GenKeyCache(user.UserName), cancellation)
+        };
+        await Task.WhenAll(tasks);
         return user;
     }
 
     public async Task<bool> DeleteUserAsync(long id, CancellationToken cancellation = default)
     {
-        var num = await _writeDbRepository.DeleteAsync(id, cancellation);
+        var user = await GetByIdAsync(id, cancellation) ?? throw new UserNotFoundException(id);
+        var num = await _writeDbRepository.DeleteAsync(user.Id, cancellation);
+        var tasks = new List<Task>
+        {
+            _distributedCache.Invalidate(GenKeyCache(user.PhoneNumber), cancellation),
+            _distributedCache.Invalidate(GenKeyCache(user.Id), cancellation),
+            _distributedCache.Invalidate(GenKeyCache(user.UserName), cancellation)
+        };
+        await Task.WhenAll(tasks);
         return num > 0;
     }
 
@@ -91,6 +127,24 @@ public class UserRepository : IUserRepository
     {
         var user = await GetByIdAsync(id, cancellation) ?? throw new UserNotFoundException(id);
         user.LastLogin = DateTime.UtcNow;
-        await _writeDbRepository.UpdateAsync(user.ToTable(), cancellation);
+
+        var tasks = new List<Task>
+        {
+            _distributedCache.Invalidate(GenKeyCache(user.PhoneNumber), cancellation),
+            _writeDbRepository.UpdateAsync(user.ToTable(), cancellation),
+            _distributedCache.Invalidate(GenKeyCache(user.Id), cancellation),
+            _distributedCache.Invalidate(GenKeyCache(user.UserName), cancellation)
+        };
+        await Task.WhenAll(tasks);
+    }
+
+    private static string GenKeyCache(long id)
+    {
+        return $"{CacheKey}:{id}";
+    }
+
+    private static string GenKeyCache(string username)
+    {
+        return $"{CacheKey}:{username}";
     }
 }
