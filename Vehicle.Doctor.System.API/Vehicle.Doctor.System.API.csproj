@@ -38,6 +38,7 @@
     <Folder Include="Applications\Features\Users\Commands\CommandHandlers\" />
     <Folder Include="Applications\Constants\" />
     <Folder Include="Applications\Middleware\Logging\" />
+    <Folder Include="Applications\Helpers\" />
     <Folder Include="Applications\Utils\" />
     <Folder Include="Applications\Repositories\" />
     <Folder Include="Infrastructure\Options\" />
