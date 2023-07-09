@@ -1,35 +1,46 @@
+using NLog;
 using Vehicle.Doctor.System.API.Applications;
 using Vehicle.Doctor.System.API.Applications.Configurations;
 using Vehicle.Doctor.System.API.Infrastructure;
 
-var builder = WebApplication.CreateBuilder(args);
+var logger = LogManager.Setup().LoadConfigurationFromFile().GetCurrentClassLogger();
+logger.Info("Application is started");
 
-// Add services to the container.
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
+    builder.Services.AddControllers().AddNewtonsoftJson();
 
-builder.Services.AddControllers().AddNewtonsoftJson();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    var appSetting = new ApplicationSetting();
+    builder.Configuration.GetSection("AppSetting").Bind(appSetting);
+    builder.Services.AddSingleton(appSetting);
 
-var appSetting = new ApplicationSetting();
-builder.Configuration.GetSection("AppSetting").Bind(appSetting);
-builder.Services.AddSingleton(appSetting);
+    builder.Services
+        .AddApplicationService()
+        .AddInfrastructure(appSetting);
 
-builder.Services
-    .AddApplicationService()
-    .AddInfrastructure(appSetting);
+    var app = builder.Build();
 
-var app = builder.Build();
+    var settings = app.Services.GetService<ApplicationSetting>();
+    if (settings?.Swagger.IsEnable ?? false) app.UseCustomSwagger();
+    app.UseHttpsRedirection();
 
-var settings = app.Services.GetService<ApplicationSetting>();
-if (settings?.Swagger.IsEnable ?? false) app.UseCustomSwagger();
-app.UseHttpsRedirection();
+    app.UseAuthentication();
+    app.UseAuthorization();
 
-app.UseAuthentication();
-app.UseAuthorization();
+    app.UseInfrastructure();
 
-app.UseInfrastructure();
+    app.MapControllers();
 
-app.MapControllers();
+    app.Run();
 
-app.Run();
+}
+catch (Exception ex)
+{
+    logger.Error(ex, "Stopped program because of exception");
+    throw;
+}
+finally
+{
+    LogManager.Shutdown();
+}
