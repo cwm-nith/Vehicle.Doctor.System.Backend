@@ -1,4 +1,4 @@
-﻿namespace NN.POS.System.Model.Dtos;
+﻿namespace Vehicle.Doctor.System.Shared.Dto;
 
 public interface IBaseDto
 {

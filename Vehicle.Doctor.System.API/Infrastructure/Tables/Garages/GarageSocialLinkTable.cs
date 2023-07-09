@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.BaseTables;
+using Vehicle.Doctor.System.Shared.Enums.Garages;
 
 namespace Vehicle.Doctor.System.API.Infrastructure.Tables.Garages;
 
@@ -13,7 +14,7 @@ public class GarageSocialLinkTable : BaseTable
     public string SocialLink { get; set; } = string.Empty;
 
     [Column("social_link_type")]
-    public SocialLinkType SocialLinkType { get; set; }
+    public GarageEnums.SocialLinkType SocialLinkType { get; set; }
 
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
@@ -22,16 +23,4 @@ public class GarageSocialLinkTable : BaseTable
     public DateTime? UpdatedAt { get; set; }
 
     public GarageContactTable? GarageContact { get; set; }
-}
-
-public enum SocialLinkType
-{
-    None = 0,
-    YouTube = 1,
-    Facebook = 2,
-    Instagram = 3,
-    Twitter = 4,
-    Tamneak = 5,
-    Threads = 6,
-    TikTok = 7,
 }
