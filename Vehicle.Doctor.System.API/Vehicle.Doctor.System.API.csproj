@@ -43,6 +43,8 @@
     <Folder Include="Applications\Repositories\" />
     <Folder Include="Infrastructure\Options\" />
     <Folder Include="Infrastructure\Swagger\CustomizeHeader\" />
+    <Folder Include="Infrastructure\Tables\Garages\" />
+    <Folder Include="Infrastructure\Tables\Configurations\" />
     <Folder Include="Infrastructure\Tables\Users\" />
   </ItemGroup>
 
