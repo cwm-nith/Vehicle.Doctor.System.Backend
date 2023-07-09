@@ -11,6 +11,6 @@ public interface IGarageRepository
 
     Task<GarageEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default);
     Task<GarageEntity?> GetByIdUserIdAsync(long userId, long id, CancellationToken cancellationToken = default);
-    Task<PagedResult<GarageEntity>> GetByUserIdAsync(long userId, CancellationToken cancellationToken = default);
-    Task<PagedResult<GarageEntity>> GetAsync(CancellationToken cancellationToken = default);
+    Task<PagedResult<GarageEntity>> GetByUserIdAsync(long userId, PagedQuery q, CancellationToken cancellationToken = default);
+    Task<PagedResult<GarageEntity>> GetAsync(PagedQuery q, CancellationToken cancellationToken = default);
 }

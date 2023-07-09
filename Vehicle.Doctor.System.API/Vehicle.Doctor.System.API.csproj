@@ -36,6 +36,7 @@
     <Folder Include="Applications\Entities\Garages\" />
     <Folder Include="Applications\Entities\Users\" />
     <Folder Include="Applications\Exceptions\Middleware\" />
+    <Folder Include="Applications\Exceptions\Garages\" />
     <Folder Include="Applications\Features\Authentications\Commands\CommandHandlers\" />
     <Folder Include="Applications\Features\Authentications\Queries\" />
     <Folder Include="Applications\Features\Garages\Commands\CommandHandlers\" />
