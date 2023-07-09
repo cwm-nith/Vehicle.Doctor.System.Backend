@@ -4,6 +4,11 @@
         <name>Vehicle.Doctor.System.API</name>
     </assembly>
     <members>
+        <member name="M:Vehicle.Doctor.System.API.Controllers.V1.GarageController.CreateAsync(Vehicle.Doctor.System.Shared.Dto.Garages.CreateGarageDto)">
+            <summary>
+            Social Link Type => None = 0, YouTube = 1, Facebook = 2, Instagram = 3, Twitter = 4, Tamneak = 5, Threads = 6, TikTok = 7,
+            </summary>
+        </member>
         <member name="M:Vehicle.Doctor.System.API.Controllers.V1.UserController.Get(Vehicle.Doctor.System.Common.Pagination.PagedQuery)">
             <summary>
             Get all users

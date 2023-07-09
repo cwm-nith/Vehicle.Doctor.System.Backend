@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Vehicle.Doctor.System.API.Applications.Constants;
+using Vehicle.Doctor.System.API.Applications.Features.Users.Queries;
 
 namespace NN.POS.System.API.Controllers;
 
@@ -12,8 +14,14 @@ public class BaseApiController : ControllerBase
     private const string ResourceHeader = "X-Resource";
     private const string IdentityHeader = "X-Identity";
 
+    private long GetUserId()
+    {
+        var userId = User.Claims
+            .FirstOrDefault(i => i.Type == ClaimsConstant.UserId)?.Value ?? "0";
+        return long.Parse(userId);
+    }
 
-    protected string UserId => User?.Identity?.Name ?? string.Empty;
+    protected long UserId => GetUserId();
 
     protected string UserRole
     {

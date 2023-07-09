@@ -40,24 +40,7 @@ public static class UserExtensions
             LastLogin = t.LastLogin,
             Name = t.Name,
         };
-
-    public static UserEntity ToEntity(this UserDto t, string? token = null) =>
-        new()
-        {
-            Id = t.Id,
-            Token = t.Token ?? token,
-            CreatedAt = t.CreatedAt,
-            DeletedAt = t.DeletedAt,
-            LastLogin = t.LastLogin,
-            Name = t.Name,
-            PhoneNumber = t.PhoneNumber,
-            UpdatedAt = t.UpdatedAt,
-            DeletedBy = t.DeletedBy,
-            MobileToken = t.MobileToken,
-            UpdatedBy = t.UpdatedBy,
-            UserName = t.Username
-        };
-
+    
     public static UserTable ToTable(this UserEntity t) =>
         new()
         {

@@ -17,7 +17,5 @@ public class GarageEntity : IEntity
     public DateTime? UpdatedAt { get; set; }
     public long? UpdatedBy { get; set; }
 
-    public UserEntity? User { get; set; }
-
     public List<GarageContactEntity>? GarageContacts { get; set; }
 }

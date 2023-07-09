@@ -10,6 +10,4 @@ public class GarageSocialLinkDto : IBaseDto
     public GarageEnums.SocialLinkType SocialLinkType { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-
-    public GarageContactDto? GarageContact { get; set; }
 }
