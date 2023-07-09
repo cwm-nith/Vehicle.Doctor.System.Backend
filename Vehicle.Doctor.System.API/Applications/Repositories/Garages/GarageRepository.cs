@@ -1,4 +1,10 @@
-﻿using Vehicle.Doctor.System.API.Applications.Entities.Garages;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Vehicle.Doctor.System.API.Applications.Entities.Garages;
+using Vehicle.Doctor.System.API.Applications.Entities.Users;
+using Vehicle.Doctor.System.API.Applications.Exceptions.Garages;
+using Vehicle.Doctor.System.API.Applications.Exceptions.Users;
+using Vehicle.Doctor.System.API.Applications.Helpers;
 using Vehicle.Doctor.System.API.Applications.IRepositories.Garages;
 using Vehicle.Doctor.System.API.Infrastructure.Tables;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Garages;
@@ -8,11 +14,17 @@ namespace Vehicle.Doctor.System.API.Applications.Repositories.Garages;
 
 public class GarageRepository : IGarageRepository
 {
+    private const string CacheKey = "GARAGES";
     private readonly IWriteDbRepository<GarageTable> _writeDbRepository;
+    private readonly IReadDbRepository<GarageTable> _readDbRepository;
+    private readonly IDistributedCache _distributedCache;
 
-    public GarageRepository(IWriteDbRepository<GarageTable> writeDbRepository)
+    public GarageRepository(IWriteDbRepository<GarageTable> writeDbRepository,
+        IReadDbRepository<GarageTable> readDbRepository, IDistributedCache distributedCache)
     {
         _writeDbRepository = writeDbRepository;
+        _readDbRepository = readDbRepository;
+        _distributedCache = distributedCache;
     }
 
     public async Task<GarageEntity> CreateAsync(GarageEntity garage, CancellationToken cancellationToken = default)
@@ -28,28 +40,56 @@ public class GarageRepository : IGarageRepository
         throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteAsync(long id, long userId, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteAsync(long id, long userId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var garage = await GetByIdUserIdAsync(userId, id, cancellationToken) ?? throw new GarageNotFoundException();
+        var num = await _writeDbRepository.DeleteAsync(garage.Id, cancellationToken);
+        return num > 0;
     }
 
-    public Task<GarageEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
+    public async Task<GarageEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var key = $"{CacheKey}:{id}";
+        var garageEntity = await _distributedCache.GetAsync<GarageEntity>(key, cancellationToken);
+        if (garageEntity is not null) return garageEntity;
+        var garage = await _readDbRepository.Context.Garages!
+            .Include(i => i.GarageContacts)!
+            .ThenInclude(i => i.GarageSocialLinks)
+            .FirstOrDefaultAsync(i => i.Id == id, cancellationToken);
+        garageEntity = garage?.ToEntity();
+        await _distributedCache.SetAsync(key, garageEntity, cancellationToken: cancellationToken);
+        return garageEntity;
     }
 
-    public Task<GarageEntity?> GetByIdUserIdAsync(long userId, long id, CancellationToken cancellationToken = default)
+    public async Task<GarageEntity?> GetByIdUserIdAsync(long userId, long id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var key = $"{CacheKey}:{id}";
+        var garageEntity = await _distributedCache.GetAsync<GarageEntity>(key, cancellationToken);
+        if (garageEntity is not null) return garageEntity;
+        var garage = await _readDbRepository.Context.Garages!
+            .Include(i => i.GarageContacts)!
+            .ThenInclude(i => i.GarageSocialLinks)
+            .FirstOrDefaultAsync(i => i.UserId == userId && i.Id == id, cancellationToken);
+        garageEntity = garage?.ToEntity();
+        await _distributedCache.SetAsync(key, garageEntity, cancellationToken: cancellationToken);
+        return garageEntity;
     }
 
-    public Task<PagedResult<GarageEntity>> GetByUserIdAsync(long userId, CancellationToken cancellationToken = default)
+    public async Task<PagedResult<GarageEntity>> GetByUserIdAsync(long userId, PagedQuery q, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var garages = await _readDbRepository.Context.Garages!
+            .Include(i => i.GarageContacts)!
+            .ThenInclude(i => i.GarageSocialLinks)
+            .Where(i => i.UserId == userId).PaginateAsync(q, cancellationToken);
+        return garages.Map(i => i.ToEntity());
     }
 
-    public Task<PagedResult<GarageEntity>> GetAsync(CancellationToken cancellationToken = default)
+    public async Task<PagedResult<GarageEntity>> GetAsync(PagedQuery q, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var garages = await _readDbRepository.Context.Garages!
+            .Include(i => i.GarageContacts)!
+            .ThenInclude(i => i.GarageSocialLinks)
+            .Where(i => true).PaginateAsync(q, cancellationToken);
+        return garages.Map(i => i.ToEntity());
     }
 }
