@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Vehicle.Doctor.System.API.Applications.IRepositories;
 using Vehicle.Doctor.System.API.Infrastructure.Options;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.BaseTables;
+using Vehicle.Doctor.System.API.Infrastructure.Tables.Configurations;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Users;
 
 namespace Vehicle.Doctor.System.API.Infrastructure.Tables;
@@ -38,6 +39,9 @@ public class DataDbContext : DbContext
 
         // Global filters
         modelBuilder.ApplyGlobalFilters<ISoftDeleteTable>(e => e.DeletedAt == null);
+
+        modelBuilder.AddGarageTableRelationship()
+            .AddUserTableRelationship();
 
         base.OnModelCreating(modelBuilder);
     }

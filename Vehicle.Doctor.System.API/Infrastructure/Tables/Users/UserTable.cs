@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.BaseTables;
+using Vehicle.Doctor.System.API.Infrastructure.Tables.Garages;
 
 namespace Vehicle.Doctor.System.API.Infrastructure.Tables.Users;
 
@@ -38,4 +39,6 @@ public class UserTable : BaseTable, IAuditableTable, ISoftDeleteTable
 
     [Column("deleted_by")]
     public long? DeletedBy { get; set; }
+
+    public List<GarageTable>? Garages { get; set; }
 }
