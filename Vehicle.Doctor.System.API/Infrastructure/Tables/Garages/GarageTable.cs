@@ -20,7 +20,7 @@ public class GarageTable : BaseTable, ISoftDeleteTable, IAuditableTable
     public double Long { get; set; }
 
     [Column("description")]
-    public string Description { get; set; } = string.Empty;
+    public string? Description { get; set; }
 
     [Column("user_id")] 
     public long UserId { get; set; }
