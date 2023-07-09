@@ -4,6 +4,7 @@ using Vehicle.Doctor.System.API.Applications.IRepositories;
 using Vehicle.Doctor.System.API.Infrastructure.Options;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.BaseTables;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Configurations;
+using Vehicle.Doctor.System.API.Infrastructure.Tables.Garages;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Users;
 
 namespace Vehicle.Doctor.System.API.Infrastructure.Tables;
@@ -15,6 +16,9 @@ public class DataDbContext : DbContext
     }
 
     public DbSet<UserTable>? Users { get; set; }
+    public DbSet<GarageTable>? Garages { get; set; }
+    public DbSet<GarageContactTable>? GarageContacts { get; set; }
+    public DbSet<GarageSocialLinkTable>? GarageSocialLinks { get; set; }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {

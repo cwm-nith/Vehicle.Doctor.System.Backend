@@ -40,8 +40,8 @@
     <Folder Include="Applications\Constants\" />
     <Folder Include="Applications\Middleware\Logging\" />
     <Folder Include="Applications\Helpers\" />
+    <Folder Include="Applications\Repositories\Garages\" />
     <Folder Include="Applications\Utils\" />
-    <Folder Include="Applications\Repositories\" />
     <Folder Include="Infrastructure\Options\" />
     <Folder Include="Infrastructure\Swagger\CustomizeHeader\" />
     <Folder Include="Infrastructure\Tables\Garages\" />
