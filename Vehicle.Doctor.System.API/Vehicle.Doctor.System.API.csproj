@@ -36,6 +36,8 @@
     <Folder Include="Applications\Exceptions\Middleware\" />
     <Folder Include="Applications\Features\Authentications\Commands\CommandHandlers\" />
     <Folder Include="Applications\Features\Authentications\Queries\" />
+    <Folder Include="Applications\Features\Garages\Commands\CommandHandlers\" />
+    <Folder Include="Applications\Features\Garages\Queries\QueryHandlers\" />
     <Folder Include="Applications\Features\Users\Commands\CommandHandlers\" />
     <Folder Include="Applications\Constants\" />
     <Folder Include="Applications\Middleware\Logging\" />

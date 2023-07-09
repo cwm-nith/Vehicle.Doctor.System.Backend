@@ -39,7 +39,7 @@ public class GarageTable : BaseTable, ISoftDeleteTable, IAuditableTable
 
     [Column("updated_by")]
     public long? UpdatedBy { get; set; }
-
+    
     public UserTable? User { get; set; }
 
     public List<GarageContactTable>? GarageContacts { get; set; }

@@ -32,6 +32,11 @@ public class DataDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder
+            .AddUserTableRelationship()
+            .AddGarageTableRelationship();
+
         // ref: https://stackoverflow.com/questions/46526230/disable-cascade-delete-on-ef-core-2-globally
         var cascadeFKs = modelBuilder.Model.GetEntityTypes()
             .SelectMany(t => t.GetForeignKeys())
@@ -43,11 +48,6 @@ public class DataDbContext : DbContext
 
         // Global filters
         modelBuilder.ApplyGlobalFilters<ISoftDeleteTable>(e => e.DeletedAt == null);
-
-        modelBuilder.AddGarageTableRelationship()
-            .AddUserTableRelationship();
-
-        base.OnModelCreating(modelBuilder);
     }
 
     public override int SaveChanges()
