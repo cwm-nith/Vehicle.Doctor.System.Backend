@@ -1,8 +1,8 @@
 ﻿using Vehicle.Doctor.System.Shared.Enums.Garages;
 
-namespace Vehicle.Doctor.System.API.Applications.Entities.Garages;
+namespace Vehicle.Doctor.System.Shared.Dto.Garages;
 
-public class GarageSocialLinkEntity : IEntity
+public class GarageSocialLinkDto : IBaseDto
 {
     public long Id { get; set; }
     public long GarageContactId { get; set; }
@@ -11,5 +11,5 @@ public class GarageSocialLinkEntity : IEntity
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 
-    public GarageContactEntity? GarageContact { get; set; }
+    public GarageContactDto? GarageContact { get; set; }
 }

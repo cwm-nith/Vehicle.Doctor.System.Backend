@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using NN.POS.System.Model.Dtos;
 
 namespace Vehicle.Doctor.System.Shared.Dto.Users;
 
