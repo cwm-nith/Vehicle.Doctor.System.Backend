@@ -1,10 +1,9 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Vehicle.Doctor.System.API.Applications.Constants;
-using Vehicle.Doctor.System.API.Applications.Features.Users.Queries;
 
-namespace NN.POS.System.API.Controllers;
+namespace Vehicle.Doctor.System.API.Controllers;
 
 [Route("/api/v{version:apiVersion}/[controller]")]
 [ApiController]

@@ -43,14 +43,18 @@
     <Folder Include="Applications\Features\Garages\Queries\QueryHandlers\" />
     <Folder Include="Applications\Features\Users\Commands\CommandHandlers\" />
     <Folder Include="Applications\Constants\" />
+    <Folder Include="Applications\IRepositories\Posts\" />
     <Folder Include="Applications\Middleware\Logging\" />
     <Folder Include="Applications\Helpers\" />
     <Folder Include="Applications\Repositories\Garages\" />
+    <Folder Include="Applications\Repositories\Posts\" />
     <Folder Include="Applications\Utils\" />
+    <Folder Include="Controllers\V1\Posts\" />
     <Folder Include="Infrastructure\Options\" />
     <Folder Include="Infrastructure\Swagger\CustomizeHeader\" />
     <Folder Include="Infrastructure\Tables\Garages\" />
     <Folder Include="Infrastructure\Tables\Configurations\" />
+    <Folder Include="Infrastructure\Tables\Posts\" />
     <Folder Include="Infrastructure\Tables\Users\" />
   </ItemGroup>
 
