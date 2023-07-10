@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NN.POS.System.API.Controllers;
+using Vehicle.Doctor.System.API.Applications.Constants;
 using Vehicle.Doctor.System.API.Applications.Features.Users.Commands;
 using Vehicle.Doctor.System.API.Applications.Features.Users.Queries;
 using Vehicle.Doctor.System.Common.Pagination;
@@ -9,7 +9,7 @@ using Vehicle.Doctor.System.Shared.Dto.Users;
 
 namespace Vehicle.Doctor.System.API.Controllers.V1;
 
-[ApiVersion("1")]
+[ApiVersion(ApiVersionConstant.V1)]
 public class UserController : BaseApiController
 {
     private readonly IMediator _mediator;

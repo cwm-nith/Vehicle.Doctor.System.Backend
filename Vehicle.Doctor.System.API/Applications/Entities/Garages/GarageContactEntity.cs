@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Vehicle.Doctor.System.API.Infrastructure.Tables.Garages;
-
-namespace Vehicle.Doctor.System.API.Applications.Entities.Garages;
+﻿namespace Vehicle.Doctor.System.API.Applications.Entities.Garages;
 
 public class GarageContactEntity : IEntity
 {

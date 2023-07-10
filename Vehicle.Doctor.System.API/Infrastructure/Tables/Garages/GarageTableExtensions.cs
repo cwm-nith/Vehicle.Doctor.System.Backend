@@ -1,5 +1,4 @@
 ﻿using Vehicle.Doctor.System.API.Applications.Entities.Garages;
-using Vehicle.Doctor.System.API.Infrastructure.Tables.Users;
 using Vehicle.Doctor.System.Shared.Dto.Garages;
 
 namespace Vehicle.Doctor.System.API.Infrastructure.Tables.Garages;

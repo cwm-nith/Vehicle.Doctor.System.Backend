@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NN.POS.System.API.Controllers;
+using Vehicle.Doctor.System.API.Applications.Constants;
 using Vehicle.Doctor.System.API.Applications.Features.Garages.Commands;
 using Vehicle.Doctor.System.API.Applications.Features.Garages.Queries;
 using Vehicle.Doctor.System.Common.Pagination;
@@ -8,7 +8,7 @@ using Vehicle.Doctor.System.Shared.Dto.Garages;
 
 namespace Vehicle.Doctor.System.API.Controllers.V1;
 
-[ApiVersion("1")]
+[ApiVersion(ApiVersionConstant.V1)]
 public class GarageController : BaseApiController
 {
     private readonly IMediator _mediator;

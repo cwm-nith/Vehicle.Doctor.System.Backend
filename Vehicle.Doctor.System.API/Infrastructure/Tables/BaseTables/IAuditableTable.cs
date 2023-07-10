@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Vehicle.Doctor.System.API.Infrastructure.Tables.BaseTables;
+﻿namespace Vehicle.Doctor.System.API.Infrastructure.Tables.BaseTables;
 
 public interface IAuditableTable
 {
