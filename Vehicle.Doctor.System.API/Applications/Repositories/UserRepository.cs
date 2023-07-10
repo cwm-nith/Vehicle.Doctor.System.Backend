@@ -13,8 +13,7 @@ namespace Vehicle.Doctor.System.API.Applications.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    public const string CacheKey = "VDS:USERS";
-
+    private const string CacheKey = "USERS";
     private readonly IWriteDbRepository<UserTable> _writeDbRepository;
     private readonly IReadDbRepository<UserTable> _readDbRepository;
     private readonly ITokenRepository _tokenProvider;
@@ -29,9 +28,9 @@ public class UserRepository : IUserRepository
     }
     public async Task<UserEntity?> GetByIdAsync(long id, CancellationToken cancellation = default)
     {
-        var key = GenKeyCache(id);
+        var key = $"{CacheKey}:{id}";
         var userEntity = await _distributedCache.GetAsync<UserEntity>(key, cancellation);
-        if(userEntity is not null) return userEntity;
+        if (userEntity is not null) return userEntity;
         var user = await _readDbRepository.FirstOrDefaultAsync(i => i.Id == id, cancellation);
         userEntity = user?.ToEntity();
         await _distributedCache.SetAsync(key, userEntity, cancellationToken: cancellation);
@@ -40,7 +39,7 @@ public class UserRepository : IUserRepository
 
     public async Task<UserEntity?> GetByUserNameAsync(string username, CancellationToken cancellation = default)
     {
-        var key = GenKeyCache(username);
+        var key = $"{CacheKey}:{username}";
         var userEntity = await _distributedCache.GetAsync<UserEntity>(key, cancellation);
         if (userEntity is not null) return userEntity;
         var user = await _readDbRepository.FirstOrDefaultAsync(i => i.UserName == username, cancellation);
@@ -53,7 +52,7 @@ public class UserRepository : IUserRepository
     {
 
         phoneNumber = RegexExtension.ValidatePhoneNumber(phoneNumber);
-        var key = GenKeyCache(phoneNumber);
+        var key = $"{CacheKey}:{phoneNumber}";
         var userEntity = await _distributedCache.GetAsync<UserEntity>(key, cancellation);
         if (userEntity is not null) return userEntity;
         var user = await _readDbRepository.FirstOrDefaultAsync(i => i.PhoneNumber == phoneNumber, cancellation);
@@ -95,10 +94,10 @@ public class UserRepository : IUserRepository
 
         var tasks = new List<Task>
         {
-            _distributedCache.Invalidate(GenKeyCache(user.PhoneNumber), cancellation),
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.PhoneNumber}", cancellation),
             _writeDbRepository.UpdateAsync(user.ToTable(), cancellation),
-            _distributedCache.Invalidate(GenKeyCache(user.Id), cancellation),
-            _distributedCache.Invalidate(GenKeyCache(user.UserName), cancellation)
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.Id}", cancellation),
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.UserName}", cancellation)
         };
         await Task.WhenAll(tasks);
         return user;
@@ -110,9 +109,9 @@ public class UserRepository : IUserRepository
         var num = await _writeDbRepository.DeleteAsync(user.Id, cancellation);
         var tasks = new List<Task>
         {
-            _distributedCache.Invalidate(GenKeyCache(user.PhoneNumber), cancellation),
-            _distributedCache.Invalidate(GenKeyCache(user.Id), cancellation),
-            _distributedCache.Invalidate(GenKeyCache(user.UserName), cancellation)
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.PhoneNumber}", cancellation),
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.Id}", cancellation),
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.UserName}", cancellation)
         };
         await Task.WhenAll(tasks);
         return num > 0;
@@ -130,21 +129,11 @@ public class UserRepository : IUserRepository
 
         var tasks = new List<Task>
         {
-            _distributedCache.Invalidate(GenKeyCache(user.PhoneNumber), cancellation),
+            _distributedCache.InvalidateAsync(user.PhoneNumber, cancellation),
             _writeDbRepository.UpdateAsync(user.ToTable(), cancellation),
-            _distributedCache.Invalidate(GenKeyCache(user.Id), cancellation),
-            _distributedCache.Invalidate(GenKeyCache(user.UserName), cancellation)
+            _distributedCache.InvalidateAsync(user.Id.ToString(), cancellation),
+            _distributedCache.InvalidateAsync(user.UserName, cancellation)
         };
         await Task.WhenAll(tasks);
-    }
-
-    private static string GenKeyCache(long id)
-    {
-        return $"{CacheKey}:{id}";
-    }
-
-    private static string GenKeyCache(string username)
-    {
-        return $"{CacheKey}:{username}";
     }
 }

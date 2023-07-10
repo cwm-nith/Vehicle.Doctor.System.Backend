@@ -11,6 +11,9 @@ public class HttpErrorCodes
     public const string InvUserName = "INVALID_USERNAME";
     public const string UserAlreadyExisted = "USER_ALREADY_EXISTED";
 
+    public const string GarageNotFound = "GARAGE_NOT_FOUND";
+    public const string GarageCannotBeNull = "GARAGE_CANNOT_BE_NULL";
+
     protected HttpErrorCodes()
     {
     }

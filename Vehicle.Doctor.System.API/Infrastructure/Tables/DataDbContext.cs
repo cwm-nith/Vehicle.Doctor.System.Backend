@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Vehicle.Doctor.System.API.Applications.IRepositories;
 using Vehicle.Doctor.System.API.Infrastructure.Options;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.BaseTables;
+using Vehicle.Doctor.System.API.Infrastructure.Tables.Configurations;
+using Vehicle.Doctor.System.API.Infrastructure.Tables.Garages;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Users;
 
 namespace Vehicle.Doctor.System.API.Infrastructure.Tables;
@@ -14,6 +16,9 @@ public class DataDbContext : DbContext
     }
 
     public DbSet<UserTable>? Users { get; set; }
+    public DbSet<GarageTable>? Garages { get; set; }
+    public DbSet<GarageContactTable>? GarageContacts { get; set; }
+    public DbSet<GarageSocialLinkTable>? GarageSocialLinks { get; set; }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
@@ -27,6 +32,10 @@ public class DataDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder
+            .AddUserTableRelationship()
+            .AddGarageTableRelationship();
+
         // ref: https://stackoverflow.com/questions/46526230/disable-cascade-delete-on-ef-core-2-globally
         var cascadeFKs = modelBuilder.Model.GetEntityTypes()
             .SelectMany(t => t.GetForeignKeys())
@@ -38,7 +47,6 @@ public class DataDbContext : DbContext
 
         // Global filters
         modelBuilder.ApplyGlobalFilters<ISoftDeleteTable>(e => e.DeletedAt == null);
-
         base.OnModelCreating(modelBuilder);
     }
 

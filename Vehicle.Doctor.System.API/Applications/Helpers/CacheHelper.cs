@@ -5,6 +5,7 @@ namespace Vehicle.Doctor.System.API.Applications.Helpers;
 
 public static class CacheHelper
 {
+    public const string CacheKey = "VDS";
     public static async Task SetAsync<T>(this IDistributedCache cache,
         string key,
         T data,
@@ -18,20 +19,25 @@ public static class CacheHelper
             SlidingExpiration = slidingExpireTime
         };
         var jsonData = JsonConvert.SerializeObject(data);
-        await cache.SetStringAsync(key, jsonData, options, token: cancellationToken);
+        await cache.SetStringAsync(GenKeyCache(key), jsonData, options, token: cancellationToken);
     }
 
     public static async Task<T?> GetAsync<T>(this IDistributedCache cache,
         string key, CancellationToken cancellationToken = default)
     {
-        var jsonData = await cache.GetStringAsync(key, token: cancellationToken);
+        var jsonData = await cache.GetStringAsync(GenKeyCache(key), token: cancellationToken);
 
         return jsonData is null ? default : JsonConvert.DeserializeObject<T>(jsonData);
     }
 
-    public static async Task Invalidate(this IDistributedCache cache, string key,
+    private static string GenKeyCache(string key)
+    {
+        return $"{CacheKey}:{key}";
+    }
+
+    public static async Task InvalidateAsync(this IDistributedCache cache, string key,
         CancellationToken cancellationToken = default)
     {
-        await cache.RemoveAsync(key, cancellationToken);
+        await cache.RemoveAsync(GenKeyCache(key), cancellationToken);
     }
 }

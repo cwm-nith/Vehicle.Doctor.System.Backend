@@ -24,6 +24,8 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NLog" Version="5.2.2" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
@@ -31,18 +33,24 @@
 
   <ItemGroup>
     <Folder Include="Applications\Configurations\" />
+    <Folder Include="Applications\Entities\Garages\" />
     <Folder Include="Applications\Entities\Users\" />
     <Folder Include="Applications\Exceptions\Middleware\" />
+    <Folder Include="Applications\Exceptions\Garages\" />
     <Folder Include="Applications\Features\Authentications\Commands\CommandHandlers\" />
     <Folder Include="Applications\Features\Authentications\Queries\" />
+    <Folder Include="Applications\Features\Garages\Commands\CommandHandlers\" />
+    <Folder Include="Applications\Features\Garages\Queries\QueryHandlers\" />
     <Folder Include="Applications\Features\Users\Commands\CommandHandlers\" />
     <Folder Include="Applications\Constants\" />
     <Folder Include="Applications\Middleware\Logging\" />
     <Folder Include="Applications\Helpers\" />
+    <Folder Include="Applications\Repositories\Garages\" />
     <Folder Include="Applications\Utils\" />
-    <Folder Include="Applications\Repositories\" />
     <Folder Include="Infrastructure\Options\" />
     <Folder Include="Infrastructure\Swagger\CustomizeHeader\" />
+    <Folder Include="Infrastructure\Tables\Garages\" />
+    <Folder Include="Infrastructure\Tables\Configurations\" />
     <Folder Include="Infrastructure\Tables\Users\" />
   </ItemGroup>
 

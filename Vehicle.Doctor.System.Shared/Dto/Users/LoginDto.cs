@@ -2,7 +2,7 @@
 
 namespace Vehicle.Doctor.System.Shared.Dto.Users;
 
-public class LoginDto
+public class LoginDto : IBaseDto
 {
     [Required]
     public string PhoneNumber { get; set; } = string.Empty;
