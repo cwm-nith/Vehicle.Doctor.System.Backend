@@ -35,7 +35,7 @@ public static class CacheHelper
         return $"{CacheKey}:{key}";
     }
 
-    public static async Task Invalidate(this IDistributedCache cache, string key,
+    public static async Task InvalidateAsync(this IDistributedCache cache, string key,
         CancellationToken cancellationToken = default)
     {
         await cache.RemoveAsync(GenKeyCache(key), cancellationToken);

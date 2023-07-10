@@ -94,10 +94,10 @@ public class UserRepository : IUserRepository
 
         var tasks = new List<Task>
         {
-            _distributedCache.Invalidate($"{CacheKey}:{user.PhoneNumber}", cancellation),
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.PhoneNumber}", cancellation),
             _writeDbRepository.UpdateAsync(user.ToTable(), cancellation),
-            _distributedCache.Invalidate($"{CacheKey}:{user.Id}", cancellation),
-            _distributedCache.Invalidate($"{CacheKey}:{user.UserName}", cancellation)
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.Id}", cancellation),
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.UserName}", cancellation)
         };
         await Task.WhenAll(tasks);
         return user;
@@ -109,9 +109,9 @@ public class UserRepository : IUserRepository
         var num = await _writeDbRepository.DeleteAsync(user.Id, cancellation);
         var tasks = new List<Task>
         {
-            _distributedCache.Invalidate($"{CacheKey}:{user.PhoneNumber}", cancellation),
-            _distributedCache.Invalidate($"{CacheKey}:{user.Id}", cancellation),
-            _distributedCache.Invalidate($"{CacheKey}:{user.UserName}", cancellation)
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.PhoneNumber}", cancellation),
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.Id}", cancellation),
+            _distributedCache.InvalidateAsync($"{CacheKey}:{user.UserName}", cancellation)
         };
         await Task.WhenAll(tasks);
         return num > 0;
@@ -129,10 +129,10 @@ public class UserRepository : IUserRepository
 
         var tasks = new List<Task>
         {
-            _distributedCache.Invalidate(user.PhoneNumber, cancellation),
+            _distributedCache.InvalidateAsync(user.PhoneNumber, cancellation),
             _writeDbRepository.UpdateAsync(user.ToTable(), cancellation),
-            _distributedCache.Invalidate(user.Id.ToString(), cancellation),
-            _distributedCache.Invalidate(user.UserName, cancellation)
+            _distributedCache.InvalidateAsync(user.Id.ToString(), cancellation),
+            _distributedCache.InvalidateAsync(user.UserName, cancellation)
         };
         await Task.WhenAll(tasks);
     }
