@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Vehicle.Doctor.System.API.Applications.Constants;
 using Vehicle.Doctor.System.API.Applications.Features.Posts.Commands;
+using Vehicle.Doctor.System.API.Applications.Features.Posts.Queries;
+using Vehicle.Doctor.System.Common.Pagination;
 using Vehicle.Doctor.System.Shared.Dto.Posts;
 
 namespace Vehicle.Doctor.System.API.Controllers.V1.Posts;
@@ -17,9 +19,10 @@ public class PostController : BaseApiController
     }
 
     [HttpGet]
-    public ActionResult GetAsync()
+    public async Task<ActionResult<PagedResult<PostDto>>> GetAsync([FromQuery] PagedQuery q)
     {
-        return Ok();
+        var data = await _mediator.Send(new GetPostQuery(q));
+        return Ok(data);
     }
 
     [HttpPost]
