@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Vehicle.Doctor.System.API.Applications.Entities.Garages;
-using Vehicle.Doctor.System.API.Applications.Entities.Users;
 using Vehicle.Doctor.System.API.Applications.Exceptions.Garages;
-using Vehicle.Doctor.System.API.Applications.Exceptions.Users;
 using Vehicle.Doctor.System.API.Applications.Helpers;
 using Vehicle.Doctor.System.API.Applications.IRepositories.Garages;
 using Vehicle.Doctor.System.API.Infrastructure.Tables;
@@ -35,14 +33,23 @@ public class GarageRepository : IGarageRepository
         return data.ToEntity();
     }
 
-    public Task<GarageEntity> UpdateAsync(GarageEntity garage, CancellationToken cancellationToken = default)
+    public async Task<GarageEntity> UpdateAsync(GarageEntity garage, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var key = $"{CacheKey}:{garage.Id}";
+        var tasks = new List<Task>()
+        {
+            _distributedCache.InvalidateAsync(key, cancellationToken),
+            _writeDbRepository.UpdateAsync(garage.ToTable(), cancellationToken)
+        };
+        await Task.WhenAll(tasks);
+        return garage;
     }
 
     public async Task<bool> DeleteAsync(long id, long userId, CancellationToken cancellationToken = default)
     {
+        var key = $"{CacheKey}:{id}";
         var garage = await GetByIdUserIdAsync(userId, id, cancellationToken) ?? throw new GarageNotFoundException();
+        await _distributedCache.InvalidateAsync(key, cancellationToken);
         var num = await _writeDbRepository.DeleteAsync(garage.Id, cancellationToken);
         return num > 0;
     }

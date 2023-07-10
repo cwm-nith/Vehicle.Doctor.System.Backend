@@ -43,6 +43,25 @@ public static class GarageTableExtensions
             Address = t.Address,
         };
 
+    public static GarageEntity ToEntity(this GarageDto t) =>
+        new()
+        {
+
+            Id = t.Id,
+            CreatedAt = t.CreatedAt,
+            DeletedAt = t.DeletedAt,
+            UpdatedAt = t.UpdatedAt,
+            DeletedBy = t.DeletedBy,
+            UpdatedBy = t.UpdatedBy,
+            Name = t.Name,
+            Lat = t.Lat,
+            GarageContacts = t.GarageContacts?.Select(i => i.ToEntity()).ToList(),
+            UserId = t.UserId,
+            Long = t.Long,
+            Description = t.Description,
+            Address = t.Address,
+        };
+
     public static GarageTable ToTable(this GarageEntity t) =>
         new()
         {
@@ -92,6 +111,20 @@ public static class GarageContactTableExtensions
             GarageId = t.GarageId,
         };
 
+    public static GarageContactEntity ToEntity(this GarageContactDto t) =>
+        new()
+        {
+            Id = t.Id,
+            CreatedAt = t.CreatedAt,
+            UpdatedAt = t.UpdatedAt,
+            PhoneNumber = t.PhoneNumber,
+            Telegram = t.Telegram,
+            WhatsApp = t.WhatsApp,
+            WeChat = t.WeChat,
+            GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToEntity()).ToList(),
+            GarageId = t.GarageId,
+        };
+
     public static GarageContactTable ToTable(this GarageContactEntity t) =>
         new()
         {
@@ -122,6 +155,18 @@ public static class GarageSocialLinkTableExtensions
         };
 
     public static GarageSocialLinkEntity ToEntity(this GarageSocialLinkTable t) =>
+        new()
+        {
+
+            Id = t.Id,
+            CreatedAt = t.CreatedAt,
+            UpdatedAt = t.UpdatedAt,
+            SocialLinkType = t.SocialLinkType,
+            GarageContactId = t.GarageContactId,
+            SocialLink = t.SocialLink,
+        };
+
+    public static GarageSocialLinkEntity ToEntity(this GarageSocialLinkDto t) =>
         new()
         {
 

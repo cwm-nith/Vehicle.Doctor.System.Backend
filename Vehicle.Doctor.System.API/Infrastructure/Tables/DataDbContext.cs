@@ -32,7 +32,6 @@ public class DataDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
         modelBuilder
             .AddUserTableRelationship()
             .AddGarageTableRelationship();
@@ -48,6 +47,7 @@ public class DataDbContext : DbContext
 
         // Global filters
         modelBuilder.ApplyGlobalFilters<ISoftDeleteTable>(e => e.DeletedAt == null);
+        base.OnModelCreating(modelBuilder);
     }
 
     public override int SaveChanges()

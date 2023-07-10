@@ -49,6 +49,14 @@ public class GarageController : BaseApiController
         return Ok(data);
     }
 
+    [HttpPut]
+    public async Task<ActionResult<GarageDto>> UpdateAsync([FromBody] GarageDto r)
+    {
+        var cmd = new UpdateGarageCommand(r);
+        var data = await _mediator.Send(cmd);
+        return Ok(data);
+    }
+
     [HttpDelete]
     public async Task<ActionResult<bool>> DeleteAsync(long id)
     {
