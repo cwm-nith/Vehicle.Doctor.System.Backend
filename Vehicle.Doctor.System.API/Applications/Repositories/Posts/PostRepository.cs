@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Vehicle.Doctor.System.API.Applications.Entities.Posts;
+using Vehicle.Doctor.System.API.Applications.Features.Posts.Queries;
 using Vehicle.Doctor.System.API.Applications.IRepositories.Posts;
 using Vehicle.Doctor.System.API.Infrastructure.Tables;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Posts;
@@ -24,6 +25,14 @@ public class PostRepository : IPostRepository
         var posts = await context.Posts!.Include(i => i.Comments)
             .Include(i => i.Likes).PaginateAsync(q, cancellationToken);
         return posts.Map(i => i.ToEntity());
+    }
+
+    public async Task<PagedResult<PostEntity>> GetByUserAsync(GetPostByUserQuery q, CancellationToken cancellationToken = default)
+    {
+        var context = _readDbRepository.Context;
+        var data = await context.Posts!.Where(i => i.PosterId == q.UserId).Include(i => i.Likes)
+            .Include(i => i.Comments).PaginateAsync(q.Q, cancellationToken);
+        return data.Map(i => i.ToEntity());
     }
 
     public async Task<PostEntity> CreateAsync(PostEntity postEntity, CancellationToken cancellationToken = default)
