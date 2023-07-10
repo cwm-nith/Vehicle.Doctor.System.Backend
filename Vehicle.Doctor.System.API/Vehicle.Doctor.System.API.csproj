@@ -34,6 +34,7 @@
   <ItemGroup>
     <Folder Include="Applications\Configurations\" />
     <Folder Include="Applications\Entities\Garages\" />
+    <Folder Include="Applications\Entities\Posts\" />
     <Folder Include="Applications\Entities\Users\" />
     <Folder Include="Applications\Exceptions\Middleware\" />
     <Folder Include="Applications\Exceptions\Garages\" />
@@ -41,6 +42,8 @@
     <Folder Include="Applications\Features\Authentications\Queries\" />
     <Folder Include="Applications\Features\Garages\Commands\CommandHandlers\" />
     <Folder Include="Applications\Features\Garages\Queries\QueryHandlers\" />
+    <Folder Include="Applications\Features\Posts\Commands\CommandHandlers\" />
+    <Folder Include="Applications\Features\Posts\Queries\QueryHandlers\" />
     <Folder Include="Applications\Features\Users\Commands\CommandHandlers\" />
     <Folder Include="Applications\Constants\" />
     <Folder Include="Applications\IRepositories\Posts\" />
@@ -54,7 +57,6 @@
     <Folder Include="Infrastructure\Swagger\CustomizeHeader\" />
     <Folder Include="Infrastructure\Tables\Garages\" />
     <Folder Include="Infrastructure\Tables\Configurations\" />
-    <Folder Include="Infrastructure\Tables\Posts\" />
     <Folder Include="Infrastructure\Tables\Users\" />
   </ItemGroup>
 
