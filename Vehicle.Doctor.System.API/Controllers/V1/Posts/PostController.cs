@@ -25,6 +25,13 @@ public class PostController : BaseApiController
         return Ok(data);
     }
 
+    [HttpGet("by_user")]
+    public async Task<ActionResult<PagedResult<PostDto>>> GetByUserAsync([FromQuery] PagedQuery q)
+    {
+        var data = await _mediator.Send(new GetPostByUserQuery(UserId, q));
+        return Ok(data);
+    }
+
     [HttpPost]
     public async Task<ActionResult<PostDto>> CreateAsync([FromBody] CreatePostDto r)
     {
