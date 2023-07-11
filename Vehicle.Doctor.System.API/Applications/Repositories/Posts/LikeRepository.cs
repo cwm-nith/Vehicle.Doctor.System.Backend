@@ -3,7 +3,6 @@ using Vehicle.Doctor.System.API.Applications.Entities.Posts;
 using Vehicle.Doctor.System.API.Applications.IRepositories.Posts;
 using Vehicle.Doctor.System.API.Infrastructure.Tables;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Posts;
-using Vehicle.Doctor.System.Shared.Dto.Likes;
 
 namespace Vehicle.Doctor.System.API.Applications.Repositories.Posts;
 
@@ -31,7 +30,32 @@ public class LikeRepository : ILikeRepository
 
     public async Task<LikeEntity> CreateAsync(LikeEntity entity, CancellationToken cancellation = default)
     {
+        LikeEntity? en;
+        if (entity.Id > 0)
+        {
+            en = await GetLikeAsync(i =>
+                i.Id == entity.Id && i.GarageId == entity.GarageId && i.PostId == entity.PostId && i.LikerId == entity.LikerId, cancellation);
+        }
+        else
+        {
+            en = await GetLikeAsync(i => i.GarageId == entity.GarageId && i.PostId == entity.PostId && i.LikerId == entity.LikerId, cancellation);
+        }
+
+        if (en != null)
+        {
+            en.DeletedAt = null;
+            en.DeletedBy = null;
+            await _writeDbRepository.UpdateAsync(en.ToTable(), cancellation);
+            return en;
+        }
+
         var data = await _writeDbRepository.AddAsync(entity.ToTable(), cancellation);
         return data.ToEntity();
+    }
+
+    private async Task<LikeEntity?> GetLikeAsync(Expression<Func<LikeTable, bool>> predicate, CancellationToken cancellation = default)
+    {
+        var data = await _readDbRepository.FirstOrDefaultAsync(predicate, cancellation);
+        return data?.ToEntity();
     }
 }

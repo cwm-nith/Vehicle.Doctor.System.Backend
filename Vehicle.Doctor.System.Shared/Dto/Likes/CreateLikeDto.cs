@@ -2,7 +2,7 @@
 
 public class CreateLikeDto : IBaseDto
 {
-    public long LikerId { get; set; }
+    public long PostId { get; set; }
     public long PosterId { get; set; }
     public long GarageId { get; set; }
 }
