@@ -14,6 +14,8 @@ public class HttpErrorCodes
     public const string GarageNotFound = "GARAGE_NOT_FOUND";
     public const string GarageCannotBeNull = "GARAGE_CANNOT_BE_NULL";
 
+    public const string PostNotFound = "POST_NOT_FOUND";
+
     protected HttpErrorCodes()
     {
     }
