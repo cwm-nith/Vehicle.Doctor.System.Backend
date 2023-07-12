@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Vehicle.Doctor.System.API.Applications.Constants;
 using Vehicle.Doctor.System.API.Applications.Entities.Users;
 using Vehicle.Doctor.System.API.Applications.Exceptions.Users;

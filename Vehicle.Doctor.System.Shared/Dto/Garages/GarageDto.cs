@@ -1,6 +1,4 @@
-﻿using Vehicle.Doctor.System.Shared.Dto.Users;
-
-namespace Vehicle.Doctor.System.Shared.Dto.Garages;
+﻿namespace Vehicle.Doctor.System.Shared.Dto.Garages;
 
 public class GarageDto : IBaseDto
 {

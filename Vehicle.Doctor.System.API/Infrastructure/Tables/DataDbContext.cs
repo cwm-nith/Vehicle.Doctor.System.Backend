@@ -5,6 +5,7 @@ using Vehicle.Doctor.System.API.Infrastructure.Options;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.BaseTables;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Configurations;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Garages;
+using Vehicle.Doctor.System.API.Infrastructure.Tables.Posts;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Users;
 
 namespace Vehicle.Doctor.System.API.Infrastructure.Tables;
@@ -20,6 +21,10 @@ public class DataDbContext : DbContext
     public DbSet<GarageContactTable>? GarageContacts { get; set; }
     public DbSet<GarageSocialLinkTable>? GarageSocialLinks { get; set; }
 
+    public DbSet<PostTable>? Posts { get; set; }
+    public DbSet<LikeTable>? Likes { get; set; }
+    public DbSet<CommentTable>? Comments { get; set; }
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder
@@ -34,6 +39,7 @@ public class DataDbContext : DbContext
     {
         modelBuilder
             .AddUserTableRelationship()
+            .AddGarageTableRelationship()
             .AddGarageTableRelationship();
 
         // ref: https://stackoverflow.com/questions/46526230/disable-cascade-delete-on-ef-core-2-globally

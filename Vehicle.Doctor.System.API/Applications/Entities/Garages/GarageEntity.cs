@@ -1,6 +1,4 @@
-﻿using Vehicle.Doctor.System.API.Applications.Entities.Users;
-
-namespace Vehicle.Doctor.System.API.Applications.Entities.Garages;
+﻿namespace Vehicle.Doctor.System.API.Applications.Entities.Garages;
 
 public class GarageEntity : IEntity
 {
