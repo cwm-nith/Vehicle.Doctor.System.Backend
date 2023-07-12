@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Vehicle.Doctor.System.API.Applications.Configurations;
+using Vehicle.Doctor.System.API.Applications.Constants;
 using Vehicle.Doctor.System.API.Applications.Entities.Users;
 using Vehicle.Doctor.System.API.Applications.IRepositories;
 
@@ -26,10 +27,10 @@ public class TokenRepository : ITokenRepository
 
         List<Claim> claims = new()
         {
-            new Claim("userId", user.Id.ToString()),
-            new Claim("username", user.UserName),
-            new Claim("phoneNumber", user.PhoneNumber),
-            new Claim("issueAt", DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString()),
+            new Claim(ClaimsConstant.UserId, user.Id.ToString()),
+            new Claim(ClaimsConstant.UserName, user.UserName),
+            new Claim(ClaimsConstant.PhoneNumber, user.PhoneNumber),
+            new Claim(ClaimsConstant.IssueAt, DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString()),
             new Claim(ClaimTypes.NameIdentifier, user.Name),
         };
         var tokenDescriptor = new SecurityTokenDescriptor
