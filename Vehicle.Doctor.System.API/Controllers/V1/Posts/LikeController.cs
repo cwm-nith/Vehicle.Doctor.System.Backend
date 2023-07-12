@@ -21,7 +21,7 @@ public class LikeController : BaseApiController
     [HttpGet("count")]
     public async Task<ActionResult<int>> GetCountAsync(long postId, long garageId)
     {
-        var count = await _mediator.Send(new GetCountQuery(postId, garageId, UserId));
+        var count = await _mediator.Send(new GetCountQuery(postId, garageId));
         return Ok(count);
     }
 
