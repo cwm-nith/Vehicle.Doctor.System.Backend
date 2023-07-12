@@ -8,5 +8,8 @@ public class CommentTable : BasePostActivityTable
     [Column("commenter_id")] 
     public long CommenterId { get; set; }
 
+    [Column("comment")]
+    public string Comment { get; set; } = string.Empty;
+
     public PostTable? Post { get; set; }
 }

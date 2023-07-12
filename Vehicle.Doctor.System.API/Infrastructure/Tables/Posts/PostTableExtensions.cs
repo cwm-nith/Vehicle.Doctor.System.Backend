@@ -161,6 +161,7 @@ public static class CommentTableExtensions
             PostId = t.PostId,
             PosterId = t.PosterId,
             CommenterId = t.CommenterId,
+            Comment = t.Comment,
         };
 
     public static CommentEntity ToEntity(this CommentTable t) =>
@@ -177,6 +178,7 @@ public static class CommentTableExtensions
             PostId = t.PostId,
             PosterId = t.PosterId,
             CommenterId = t.CommenterId,
+            Comment = t.Comment,
         };
 
     public static CommentEntity ToEntity(this CommentDto t) =>
@@ -193,6 +195,7 @@ public static class CommentTableExtensions
             PostId = t.PostId,
             PosterId = t.PosterId,
             CommenterId = t.CommenterId,
+            Comment = t.Comment,
         };
 
     public static CommentTable ToTable(this CommentEntity t) =>
@@ -208,5 +211,6 @@ public static class CommentTableExtensions
             PostId = t.PostId,
             PosterId = t.PosterId,
             CommenterId = t.CommenterId,
+            Comment = t.Comment,
         };
 }

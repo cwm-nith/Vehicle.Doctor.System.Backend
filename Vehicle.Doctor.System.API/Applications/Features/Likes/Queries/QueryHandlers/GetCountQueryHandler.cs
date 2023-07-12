@@ -14,8 +14,7 @@ public class GetCountQueryHandler : IRequestHandler<GetCountQuery, int>
 
     public Task<int> Handle(GetCountQuery request, CancellationToken cancellationToken)
     {
-        return _likeRepository.GetCountAsync(l =>
-            l.PosterId == request.UserId && l.PostId == request.PostId
+        return _likeRepository.GetCountAsync(l => l.PostId == request.PostId
             && l.GarageId == request.GarageId, cancellationToken);
     }
 }

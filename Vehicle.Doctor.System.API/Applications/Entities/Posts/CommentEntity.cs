@@ -3,4 +3,5 @@
 public class CommentEntity : BasePostActivityEntity
 {
     public long CommenterId { get; set; }
+    public string Comment { get; set; } = string.Empty;
 }

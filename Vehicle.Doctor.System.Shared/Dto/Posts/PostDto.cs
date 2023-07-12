@@ -44,4 +44,5 @@ public class LikeDto : BasePostActivityDto, IBaseDto
 public class CommentDto : BasePostActivityDto, IBaseDto
 {
     public long CommenterId { get; set; }
+    public string Comment { get; set; } = string.Empty;
 }
