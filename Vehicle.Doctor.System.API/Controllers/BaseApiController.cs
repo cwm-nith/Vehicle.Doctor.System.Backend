@@ -2,12 +2,14 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vehicle.Doctor.System.API.Applications.Constants;
+using Vehicle.Doctor.System.API.Applications.Middleware.CustomValidationResult;
 
 namespace Vehicle.Doctor.System.API.Controllers;
 
 [Route("/api/v{version:apiVersion}/[controller]")]
 [ApiController]
 [Authorize]
+[ValidateModel]
 public class BaseApiController : ControllerBase
 {
     private const string ResourceHeader = "X-Resource";
