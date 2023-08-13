@@ -1,31 +1,43 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
+using Vehicle.Doctor.System.API.Applications.Configurations;
 
 namespace Vehicle.Doctor.System.API.Applications.Helpers;
 
-public static class CacheHelper
+public class CacheHelper
 {
     public const string CacheKey = "VDS";
-    public static async Task SetAsync<T>(this IDistributedCache cache,
+    private readonly IDistributedCache _cache;
+    private readonly ApplicationSetting _setting;
+
+    public CacheHelper(IDistributedCache cache, ApplicationSetting setting)
+    {
+        _cache = cache;
+        _setting = setting;
+    }
+
+    public async Task SetAsync<T>(
         string key,
         T data,
         TimeSpan? absoluteExpireTime = null,
         TimeSpan? slidingExpireTime = null,
         CancellationToken cancellationToken = default)
     {
+        if (!_setting.Redis.Enabled) return;
         var options = new DistributedCacheEntryOptions
         {
             AbsoluteExpirationRelativeToNow = absoluteExpireTime ?? TimeSpan.FromSeconds(86400),
             SlidingExpiration = slidingExpireTime
         };
         var jsonData = JsonConvert.SerializeObject(data);
-        await cache.SetStringAsync(GenKeyCache(key), jsonData, options, token: cancellationToken);
+        await _cache.SetStringAsync(GenKeyCache(key), jsonData, options, token: cancellationToken);
     }
 
-    public static async Task<T?> GetAsync<T>(this IDistributedCache cache,
+    public async Task<T?> GetAsync<T>(
         string key, CancellationToken cancellationToken = default)
     {
-        var jsonData = await cache.GetStringAsync(GenKeyCache(key), token: cancellationToken);
+        if (!_setting.Redis.Enabled) return default;
+        var jsonData = await _cache.GetStringAsync(GenKeyCache(key), token: cancellationToken);
 
         return jsonData is null ? default : JsonConvert.DeserializeObject<T>(jsonData);
     }
@@ -35,9 +47,10 @@ public static class CacheHelper
         return $"{CacheKey}:{key}";
     }
 
-    public static async Task InvalidateAsync(this IDistributedCache cache, string key,
+    public async Task InvalidateAsync(string key,
         CancellationToken cancellationToken = default)
     {
-        await cache.RemoveAsync(GenKeyCache(key), cancellationToken);
+        if (!_setting.Redis.Enabled) return;
+        await _cache.RemoveAsync(GenKeyCache(key), cancellationToken);
     }
 }

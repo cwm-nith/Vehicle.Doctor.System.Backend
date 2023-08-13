@@ -6,7 +6,7 @@ public class InvalidCredentialException : BaseException
 {
     public override string Code => HttpErrorCodes.InvCred;
 
-    public InvalidCredentialException() : base("Username or Password is invalid!")
+    public InvalidCredentialException() : base("Phone number or Password is invalid!")
     {
 
     }

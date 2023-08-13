@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
 using Vehicle.Doctor.System.API.Applications.Entities.Garages;
 using Vehicle.Doctor.System.API.Applications.Exceptions.Garages;
 using Vehicle.Doctor.System.API.Applications.Helpers;
@@ -15,10 +14,10 @@ public class GarageRepository : IGarageRepository
     private const string CacheKey = "GARAGES";
     private readonly IWriteDbRepository<GarageTable> _writeDbRepository;
     private readonly IReadDbRepository<GarageTable> _readDbRepository;
-    private readonly IDistributedCache _distributedCache;
+    private readonly CacheHelper _distributedCache;
 
     public GarageRepository(IWriteDbRepository<GarageTable> writeDbRepository,
-        IReadDbRepository<GarageTable> readDbRepository, IDistributedCache distributedCache)
+        IReadDbRepository<GarageTable> readDbRepository, CacheHelper distributedCache)
     {
         _writeDbRepository = writeDbRepository;
         _readDbRepository = readDbRepository;

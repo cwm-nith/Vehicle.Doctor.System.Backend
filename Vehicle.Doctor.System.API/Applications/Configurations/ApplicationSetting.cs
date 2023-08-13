@@ -13,6 +13,7 @@ public class RedisConfig
 {
     public string Url { get; set; } = string.Empty;
     public int Ttl { get; set; } = 86400; //86400s =  One day
+    public bool Enabled { get; set; }
 }
 
 public class JwtConfig

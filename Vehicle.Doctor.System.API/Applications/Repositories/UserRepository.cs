@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using Microsoft.Extensions.Caching.Distributed;
 using Vehicle.Doctor.System.API.Applications.Entities.Users;
 using Vehicle.Doctor.System.API.Applications.Exceptions.Users;
 using Vehicle.Doctor.System.API.Applications.Helpers;
@@ -17,9 +16,9 @@ public class UserRepository : IUserRepository
     private readonly IWriteDbRepository<UserTable> _writeDbRepository;
     private readonly IReadDbRepository<UserTable> _readDbRepository;
     private readonly ITokenRepository _tokenProvider;
-    private readonly IDistributedCache _distributedCache;
+    private readonly CacheHelper _distributedCache;
     public UserRepository(IWriteDbRepository<UserTable> writeDbRepository,
-        IReadDbRepository<UserTable> readDbRepository, ITokenRepository tokenProvider, IDistributedCache distributedCache)
+        IReadDbRepository<UserTable> readDbRepository, ITokenRepository tokenProvider, CacheHelper distributedCache)
     {
         _writeDbRepository = writeDbRepository;
         _readDbRepository = readDbRepository;
