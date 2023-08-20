@@ -49,7 +49,6 @@
     <Folder Include="Applications\Features\Garages\Commands\CommandHandlers\" />
     <Folder Include="Applications\Features\Garages\Queries\QueryHandlers\" />
     <Folder Include="Applications\Features\Posts\Queries\QueryHandlers\" />
-    <Folder Include="Applications\Features\Users\Commands\CommandHandlers\" />
     <Folder Include="Applications\Constants\" />
     <Folder Include="Applications\IRepositories\Posts\" />
     <Folder Include="Applications\Middleware\Logging\" />
