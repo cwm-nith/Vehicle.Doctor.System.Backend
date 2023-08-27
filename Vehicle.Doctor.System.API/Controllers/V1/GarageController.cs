@@ -26,7 +26,7 @@ public class GarageController : BaseApiController
     }
 
     [HttpGet("by_user")]
-    public async Task<ActionResult<GarageDto>> GetByUserAsync([FromQuery] PagedQuery q)
+    public async Task<ActionResult<PagedResult<GarageDto>>> GetByUserAsync([FromQuery] PagedQuery q)
     {
         var data = await _mediator.Send(new GetGaragesByUserQuery(UserId, q));
         return Ok(data);
