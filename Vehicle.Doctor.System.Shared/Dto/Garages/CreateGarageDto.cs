@@ -11,6 +11,7 @@ public class CreateGarageDto : IBaseDto
     public double Long { get; set; }
     public string? Description { get; set; }
     public List<CreateGarageContactDto>? GarageContacts { get; set; }
+    public List<CreateGarageSocialLinkDto>? GarageSocialLinks { get; set; }
 }
 
 public class CreateGarageContactDto : IBaseDto
@@ -19,8 +20,6 @@ public class CreateGarageContactDto : IBaseDto
     public string? Telegram { get; set; }
     public string? WhatsApp { get; set; }
     public string? WeChat { get; set; }
-
-    public List<CreateGarageSocialLinkDto>? GarageSocialLinks { get; set; }
 }
 
 public class CreateGarageSocialLinkDto : IBaseDto

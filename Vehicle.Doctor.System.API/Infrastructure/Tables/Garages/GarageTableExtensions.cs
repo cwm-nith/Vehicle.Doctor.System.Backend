@@ -17,6 +17,7 @@ public static class GarageTableExtensions
             Name = t.Name,
             Lat = t.Lat,
             GarageContacts = t.GarageContacts?.Select(i => i.ToDto()).ToList(),
+            GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToDto()).ToList(),
             UserId = t.UserId,
             Long = t.Long,
             Description = t.Description,
@@ -36,6 +37,7 @@ public static class GarageTableExtensions
             Name = t.Name,
             Lat = t.Lat,
             GarageContacts = t.GarageContacts?.Select(i => i.ToEntity()).ToList(),
+            GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToEntity()).ToList(),
             UserId = t.UserId,
             Long = t.Long,
             Description = t.Description,
@@ -55,6 +57,7 @@ public static class GarageTableExtensions
             Name = t.Name,
             Lat = t.Lat,
             GarageContacts = t.GarageContacts?.Select(i => i.ToEntity()).ToList(),
+            GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToEntity()).ToList(),
             UserId = t.UserId,
             Long = t.Long,
             Description = t.Description,
@@ -68,6 +71,7 @@ public static class GarageTableExtensions
             Name = t.Name,
             Lat = t.Lat,
             GarageContacts = t.GarageContacts?.Select(i => i.ToTable()).ToList(),
+            GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToTable()).ToList(),
             UserId = t.UserId,
             Long = t.Long,
             Description = t.Description,
@@ -92,7 +96,6 @@ public static class GarageContactTableExtensions
             Telegram = t.Telegram,
             WhatsApp = t.WhatsApp,
             WeChat = t.WeChat,
-            GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToDto()).ToList(),
             GarageId = t.GarageId,
         };
 
@@ -106,7 +109,6 @@ public static class GarageContactTableExtensions
             Telegram = t.Telegram,
             WhatsApp = t.WhatsApp,
             WeChat = t.WeChat,
-            GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToEntity()).ToList(),
             GarageId = t.GarageId,
         };
 
@@ -120,7 +122,6 @@ public static class GarageContactTableExtensions
             Telegram = t.Telegram,
             WhatsApp = t.WhatsApp,
             WeChat = t.WeChat,
-            GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToEntity()).ToList(),
             GarageId = t.GarageId,
         };
 
@@ -134,7 +135,6 @@ public static class GarageContactTableExtensions
             Telegram = t.Telegram,
             WhatsApp = t.WhatsApp,
             WeChat = t.WeChat,
-            GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToTable()).ToList(),
             Garage = t.Garage?.ToTable(),
             GarageId = t.GarageId,
         };
@@ -150,7 +150,7 @@ public static class GarageSocialLinkTableExtensions
             Id = t.Id,
             SocialLink = t.SocialLink,
             SocialLinkType = t.SocialLinkType,
-            GarageContactId = t.GarageContactId,
+            GarageId = t.GarageId,
         };
 
     public static GarageSocialLinkEntity ToEntity(this GarageSocialLinkTable t) =>
@@ -161,7 +161,7 @@ public static class GarageSocialLinkTableExtensions
             CreatedAt = t.CreatedAt,
             UpdatedAt = t.UpdatedAt,
             SocialLinkType = t.SocialLinkType,
-            GarageContactId = t.GarageContactId,
+            GarageId = t.GarageId,
             SocialLink = t.SocialLink,
         };
 
@@ -173,7 +173,7 @@ public static class GarageSocialLinkTableExtensions
             CreatedAt = t.CreatedAt,
             UpdatedAt = t.UpdatedAt,
             SocialLinkType = t.SocialLinkType,
-            GarageContactId = t.GarageContactId,
+            GarageId = t.GarageId,
             SocialLink = t.SocialLink,
         };
 
@@ -184,8 +184,8 @@ public static class GarageSocialLinkTableExtensions
             CreatedAt = t.CreatedAt,
             UpdatedAt = t.UpdatedAt,
             SocialLinkType = t.SocialLinkType,
-            GarageContact = t.GarageContact?.ToTable(),
-            GarageContactId = t.GarageContactId,
+            Garage = t.Garage?.ToTable(),
+            GarageId = t.GarageId,
             SocialLink = t.SocialLink,
         };
 }

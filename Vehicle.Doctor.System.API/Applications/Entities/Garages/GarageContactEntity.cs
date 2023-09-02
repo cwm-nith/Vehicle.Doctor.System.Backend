@@ -10,7 +10,5 @@ public class GarageContactEntity : IEntity
     public string? WeChat { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-
-    public List<GarageSocialLinkEntity>? GarageSocialLinks { get; set; }
     public GarageEntity? Garage { get; set; }
 }

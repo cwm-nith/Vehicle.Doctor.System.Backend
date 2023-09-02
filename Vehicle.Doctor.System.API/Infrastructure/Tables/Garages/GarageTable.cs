@@ -43,4 +43,6 @@ public class GarageTable : BaseTable, ISoftDeleteTable, IAuditableTable
     public UserTable? User { get; set; }
 
     public List<GarageContactTable>? GarageContacts { get; set; }
+
+    public List<GarageSocialLinkTable>? GarageSocialLinks { get; set; }
 }

@@ -16,21 +16,20 @@ public static class GarageTableConfiguration
             .HasMany<GarageContactTable>()
             .WithOne(i => i.Garage)
             .HasForeignKey(i => i.GarageId);
+        modelBuilder.Entity<GarageTable>()
+            .HasMany<GarageSocialLinkTable>()
+            .WithOne(i => i.Garage)
+            .HasForeignKey(i => i.GarageId);
 
         modelBuilder.Entity<GarageContactTable>()
             .HasOne(i => i.Garage)
             .WithMany(i => i.GarageContacts)
             .HasForeignKey(i => i.GarageId);
 
-        modelBuilder.Entity<GarageContactTable>()
-            .HasMany<GarageSocialLinkTable>()
-            .WithOne(i => i.GarageContact)
-            .HasForeignKey(i => i.GarageContactId);
-
         modelBuilder.Entity<GarageSocialLinkTable>()
-            .HasOne(i => i.GarageContact)
+            .HasOne(i => i.Garage)
             .WithMany(i => i.GarageSocialLinks)
-            .HasForeignKey(i => i.GarageContactId);
+            .HasForeignKey(i => i.GarageId);
         return modelBuilder;
     }
 }

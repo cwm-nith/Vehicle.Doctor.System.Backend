@@ -35,15 +35,15 @@ public class CreateGarageCommandHandler : IRequestHandler<CreateGarageCommand, G
                     Telegram = i.Telegram,
                     WeChat = i.WeChat,
                     WhatsApp = i.WhatsApp,
-                    GarageSocialLinks = i.GarageSocialLinks?
-                        .Select(s => new GarageSocialLinkEntity()
-                    {
-                        Id = 0,
-                        SocialLink = s.SocialLink,
-                        SocialLinkType = s.SocialLinkType,
-                        CreatedAt = DateTime.UtcNow,
-                        UpdatedAt = DateTime.UtcNow,
-                    }).ToList(),
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
+                }).ToList(),
+            GarageSocialLinks = r.GarageSocialLinks?
+                .Select(s => new GarageSocialLinkEntity()
+                {
+                    Id = 0,
+                    SocialLink = s.SocialLink,
+                    SocialLinkType = s.SocialLinkType,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                 }).ToList(),

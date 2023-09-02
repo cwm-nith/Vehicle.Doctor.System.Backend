@@ -10,6 +10,4 @@ public class GarageContactDto : IBaseDto
     public string? WeChat { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-
-    public List<GarageSocialLinkDto>? GarageSocialLinks { get; set; }
 }

@@ -7,8 +7,8 @@ namespace Vehicle.Doctor.System.API.Infrastructure.Tables.Garages;
 [Table("garage_social_links")]
 public class GarageSocialLinkTable : BaseTable
 {
-    [Column("garage_contact_id")]
-    public long GarageContactId { get; set; }
+    [Column("garage_id")]
+    public long GarageId { get; set; }
 
     [Column("social_ink")]
     public string SocialLink { get; set; } = string.Empty;
@@ -22,5 +22,5 @@ public class GarageSocialLinkTable : BaseTable
     [Column("updated_at")]
     public DateTime? UpdatedAt { get; set; }
 
-    public GarageContactTable? GarageContact { get; set; }
+    public GarageTable? Garage { get; set; }
 }

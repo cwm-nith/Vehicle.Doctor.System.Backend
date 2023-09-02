@@ -16,4 +16,5 @@ public class GarageEntity : IEntity
     public long? UpdatedBy { get; set; }
 
     public List<GarageContactEntity>? GarageContacts { get; set; }
+    public List<GarageSocialLinkEntity>? GarageSocialLinks { get; set; }
 }

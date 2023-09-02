@@ -27,7 +27,6 @@ public class GarageContactTable : BaseTable
     [Column("updated_at")]
     public DateTime? UpdatedAt { get; set; }
 
-    public List<GarageSocialLinkTable>? GarageSocialLinks { get; set; }
     public GarageTable? Garage { get; set; }
 }
 

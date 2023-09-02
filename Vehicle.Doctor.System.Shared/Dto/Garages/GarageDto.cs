@@ -15,4 +15,5 @@ public class GarageDto : IBaseDto
     public DateTime? UpdatedAt { get; set; }
     public long? UpdatedBy { get; set; }
     public List<GarageContactDto>? GarageContacts { get; set; }
+    public List<GarageSocialLinkDto>? GarageSocialLinks { get; set; }
 }
