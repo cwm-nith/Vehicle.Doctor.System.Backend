@@ -18,7 +18,6 @@ public class DataDbContext : DbContext
 
     public DbSet<UserTable>? Users { get; set; }
     public DbSet<GarageTable>? Garages { get; set; }
-    public DbSet<GarageContactTable>? GarageContacts { get; set; }
     public DbSet<GarageSocialLinkTable>? GarageSocialLinks { get; set; }
 
     public DbSet<PostTable>? Posts { get; set; }

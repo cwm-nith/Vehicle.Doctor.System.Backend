@@ -10,7 +10,7 @@ public class GarageSocialLinkTable : BaseTable
     [Column("garage_id")]
     public long GarageId { get; set; }
 
-    [Column("social_ink")]
+    [Column("social_link")]
     public string SocialLink { get; set; } = string.Empty;
 
     [Column("social_link_type")]

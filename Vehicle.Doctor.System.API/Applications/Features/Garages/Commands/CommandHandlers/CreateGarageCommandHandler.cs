@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Newtonsoft.Json;
 using Vehicle.Doctor.System.API.Applications.Entities.Garages;
 using Vehicle.Doctor.System.API.Applications.IRepositories.Garages;
 using Vehicle.Doctor.System.API.Infrastructure.Tables.Garages;
@@ -27,17 +28,10 @@ public class CreateGarageCommandHandler : IRequestHandler<CreateGarageCommand, G
             Long = r.Long,
             Name = r.Name,
             UserId = request.UserId,
-            GarageContacts = r.GarageContacts?
-                .Select(i => new GarageContactEntity()
-                {
-                    Id = 0,
-                    PhoneNumber = i.PhoneNumber,
-                    Telegram = i.Telegram,
-                    WeChat = i.WeChat,
-                    WhatsApp = i.WhatsApp,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
-                }).ToList(),
+            PhoneNumber = r.PhoneNumber,
+            Telegram = r.Telegram,
+            WeChat = r.WeChat,
+            WhatsApp = r.WhatsApp,
             GarageSocialLinks = r.GarageSocialLinks?
                 .Select(s => new GarageSocialLinkEntity()
                 {

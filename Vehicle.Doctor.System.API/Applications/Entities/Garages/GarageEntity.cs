@@ -14,7 +14,9 @@ public class GarageEntity : IEntity
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public long? UpdatedBy { get; set; }
-
-    public List<GarageContactEntity>? GarageContacts { get; set; }
+    public List<string> PhoneNumber { get; set; } = new();
+    public List<string> Telegram { get; set; } = new();
+    public List<string> WhatsApp { get; set; } = new();
+    public List<string> WeChat { get; set; } = new();
     public List<GarageSocialLinkEntity>? GarageSocialLinks { get; set; }
 }

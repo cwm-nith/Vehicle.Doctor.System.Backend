@@ -1,4 +1,5 @@
-﻿using Vehicle.Doctor.System.API.Applications.Entities.Garages;
+﻿using Newtonsoft.Json;
+using Vehicle.Doctor.System.API.Applications.Entities.Garages;
 using Vehicle.Doctor.System.Shared.Dto.Garages;
 
 namespace Vehicle.Doctor.System.API.Infrastructure.Tables.Garages;
@@ -16,7 +17,10 @@ public static class GarageTableExtensions
             Id = t.Id,
             Name = t.Name,
             Lat = t.Lat,
-            GarageContacts = t.GarageContacts?.Select(i => i.ToDto()).ToList(),
+            PhoneNumber = t.PhoneNumber,
+            Telegram = t.Telegram,
+            WeChat = t.WeChat,
+            WhatsApp = t.WhatsApp,
             GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToDto()).ToList(),
             UserId = t.UserId,
             Long = t.Long,
@@ -36,7 +40,10 @@ public static class GarageTableExtensions
             UpdatedBy = t.UpdatedBy,
             Name = t.Name,
             Lat = t.Lat,
-            GarageContacts = t.GarageContacts?.Select(i => i.ToEntity()).ToList(),
+            PhoneNumber = JsonConvert.DeserializeObject<List<string>>(t.PhoneNumber) ?? new List<string>(),
+            Telegram = JsonConvert.DeserializeObject<List<string>>(t.Telegram ?? "[]") ?? new List<string>(),
+            WeChat = JsonConvert.DeserializeObject<List<string>>(t.WeChat ?? "[]") ?? new List<string>(),
+            WhatsApp = JsonConvert.DeserializeObject<List<string>>(t.WhatsApp ?? "[]") ?? new List<string>(),
             GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToEntity()).ToList(),
             UserId = t.UserId,
             Long = t.Long,
@@ -56,7 +63,10 @@ public static class GarageTableExtensions
             UpdatedBy = t.UpdatedBy,
             Name = t.Name,
             Lat = t.Lat,
-            GarageContacts = t.GarageContacts?.Select(i => i.ToEntity()).ToList(),
+            PhoneNumber = t.PhoneNumber,
+            Telegram = t.Telegram,
+            WeChat = t.WeChat,
+            WhatsApp = t.WhatsApp,
             GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToEntity()).ToList(),
             UserId = t.UserId,
             Long = t.Long,
@@ -70,7 +80,10 @@ public static class GarageTableExtensions
             Id = t.Id,
             Name = t.Name,
             Lat = t.Lat,
-            GarageContacts = t.GarageContacts?.Select(i => i.ToTable()).ToList(),
+            PhoneNumber = JsonConvert.SerializeObject(t.PhoneNumber),
+            Telegram = JsonConvert.SerializeObject(t.Telegram),
+            WeChat = JsonConvert.SerializeObject(t.WeChat),
+            WhatsApp = JsonConvert.SerializeObject(t.WhatsApp),
             GarageSocialLinks = t.GarageSocialLinks?.Select(i => i.ToTable()).ToList(),
             UserId = t.UserId,
             Long = t.Long,
@@ -81,62 +94,6 @@ public static class GarageTableExtensions
             UpdatedAt = t.UpdatedAt,
             UpdatedBy = t.UpdatedBy,
             DeletedBy = t.DeletedBy,
-        };
-}
-
-public static class GarageContactTableExtensions
-{
-    public static GarageContactDto ToDto(this GarageContactEntity t) =>
-        new()
-        {
-            CreatedAt = t.CreatedAt,
-            UpdatedAt = t.UpdatedAt,
-            Id = t.Id,
-            PhoneNumber = t.PhoneNumber,
-            Telegram = t.Telegram,
-            WhatsApp = t.WhatsApp,
-            WeChat = t.WeChat,
-            GarageId = t.GarageId,
-        };
-
-    public static GarageContactEntity ToEntity(this GarageContactTable t) =>
-        new()
-        {
-            Id = t.Id,
-            CreatedAt = t.CreatedAt,
-            UpdatedAt = t.UpdatedAt,
-            PhoneNumber = t.PhoneNumber,
-            Telegram = t.Telegram,
-            WhatsApp = t.WhatsApp,
-            WeChat = t.WeChat,
-            GarageId = t.GarageId,
-        };
-
-    public static GarageContactEntity ToEntity(this GarageContactDto t) =>
-        new()
-        {
-            Id = t.Id,
-            CreatedAt = t.CreatedAt,
-            UpdatedAt = t.UpdatedAt,
-            PhoneNumber = t.PhoneNumber,
-            Telegram = t.Telegram,
-            WhatsApp = t.WhatsApp,
-            WeChat = t.WeChat,
-            GarageId = t.GarageId,
-        };
-
-    public static GarageContactTable ToTable(this GarageContactEntity t) =>
-        new()
-        {
-            Id = t.Id,
-            CreatedAt = t.CreatedAt,
-            UpdatedAt = t.UpdatedAt,
-            PhoneNumber = t.PhoneNumber,
-            Telegram = t.Telegram,
-            WhatsApp = t.WhatsApp,
-            WeChat = t.WeChat,
-            Garage = t.Garage?.ToTable(),
-            GarageId = t.GarageId,
         };
 }
 

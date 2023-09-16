@@ -59,7 +59,6 @@ public class GarageRepository : IGarageRepository
         var garageEntity = await _distributedCache.GetAsync<GarageEntity>(key, cancellationToken);
         if (garageEntity is not null) return garageEntity;
         var garage = await _readDbRepository.Context.Garages!
-            .Include(i => i.GarageContacts)
             .Include(i => i.GarageSocialLinks)
             .FirstOrDefaultAsync(i => i.Id == id, cancellationToken);
         garageEntity = garage?.ToEntity();
@@ -73,7 +72,6 @@ public class GarageRepository : IGarageRepository
         var garageEntity = await _distributedCache.GetAsync<GarageEntity>(key, cancellationToken);
         if (garageEntity is not null) return garageEntity;
         var garage = await _readDbRepository.Context.Garages!
-            .Include(i => i.GarageContacts)
             .Include(i => i.GarageSocialLinks)
             .FirstOrDefaultAsync(i => i.UserId == userId && i.Id == id, cancellationToken);
         garageEntity = garage?.ToEntity();
@@ -84,7 +82,6 @@ public class GarageRepository : IGarageRepository
     public async Task<PagedResult<GarageEntity>> GetByUserIdAsync(long userId, PagedQuery q, CancellationToken cancellationToken = default)
     {
         var garages = await _readDbRepository.Context.Garages!
-            .Include(i => i.GarageContacts)
             .Include(i => i.GarageSocialLinks)
             .Where(i => i.UserId == userId)
             .PaginateAsync(q, cancellationToken);
@@ -94,7 +91,6 @@ public class GarageRepository : IGarageRepository
     public async Task<PagedResult<GarageEntity>> GetAsync(PagedQuery q, CancellationToken cancellationToken = default)
     {
         var garages = await _readDbRepository.Context.Garages!
-            .Include(i => i.GarageContacts)
             .Include(i => i.GarageSocialLinks)
             .Where(i => true)
             .PaginateAsync(q, cancellationToken);

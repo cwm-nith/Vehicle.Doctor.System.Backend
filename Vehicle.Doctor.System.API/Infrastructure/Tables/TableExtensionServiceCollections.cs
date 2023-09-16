@@ -16,7 +16,6 @@ public static class TableExtensionServiceCollections
     {
         services.AddTableRepository<UserTable>();
         services.AddTableRepository<GarageTable>();
-        services.AddTableRepository<GarageContactTable>();
         services.AddTableRepository<GarageSocialLinkTable>();
 
         services.AddTableRepository<PostTable>();

@@ -10,16 +10,11 @@ public class CreateGarageDto : IBaseDto
     public double Lat { get; set; }
     public double Long { get; set; }
     public string? Description { get; set; }
-    public List<CreateGarageContactDto>? GarageContacts { get; set; }
+    public List<string> PhoneNumber { get; set; } = new();
+    public List<string> Telegram { get; set; } = new();
+    public List<string> WhatsApp { get; set; } = new();
+    public List<string> WeChat { get; set; } = new();
     public List<CreateGarageSocialLinkDto>? GarageSocialLinks { get; set; }
-}
-
-public class CreateGarageContactDto : IBaseDto
-{
-    [Required] public string PhoneNumber { get; set; } = string.Empty;
-    public string? Telegram { get; set; }
-    public string? WhatsApp { get; set; }
-    public string? WeChat { get; set; }
 }
 
 public class CreateGarageSocialLinkDto : IBaseDto

@@ -22,6 +22,18 @@ public class GarageTable : BaseTable, ISoftDeleteTable, IAuditableTable
     [Column("description")]
     public string? Description { get; set; }
 
+    [Column("phone_number")]
+    public string PhoneNumber { get; set; } = string.Empty;
+
+    [Column("telegram")]
+    public string? Telegram { get; set; }
+
+    [Column("whats_app")]
+    public string? WhatsApp { get; set; }
+
+    [Column("we_chat")]
+    public string? WeChat { get; set; }
+
     [Column("user_id")] 
     public long UserId { get; set; }
 
@@ -41,8 +53,6 @@ public class GarageTable : BaseTable, ISoftDeleteTable, IAuditableTable
     public long? UpdatedBy { get; set; }
     
     public UserTable? User { get; set; }
-
-    public List<GarageContactTable>? GarageContacts { get; set; }
 
     public List<GarageSocialLinkTable>? GarageSocialLinks { get; set; }
 }
