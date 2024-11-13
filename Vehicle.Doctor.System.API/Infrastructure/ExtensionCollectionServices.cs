@@ -23,7 +23,7 @@ namespace Vehicle.Doctor.System.API.Infrastructure;
 
 public static class ExtensionCollectionServices
 {
-    public static IServiceCollection AddJwtAuth(this IServiceCollection services, ApplicationSetting applicationSetting)
+    private static IServiceCollection AddJwtAuth(this IServiceCollection services, ApplicationSetting applicationSetting)
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
